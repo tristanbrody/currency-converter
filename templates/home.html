@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Currency Converter{% endblock %}
+{% block content %}
+{% if invalid_input != 'blank' or invalid_amount %}
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissable fade show" role="alert">
+    {{msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<form action="/submit" class="needs-validation" novalidate>
+    <div class="container mt-5">
+        <div class="form-group row">
+            <label for="convert-from" class="col-sm-2 col-form-label">Converting from:</label>
+            <div class="col-sm-10">
+                <input type="text" id="convert-from" name="convert-from" required>
+            </div>
+            <label for="convert-to" class="col-sm-2 col-form-label">Converting to:</label>
+            <div class="col-sm-10">
+                <input type="text" id="convert-to" name="convert-to" required>
+            </div>
+            <label for="amount" class="col-sm-2 col-form-label">Amount:</label>
+            <div class="col-sm-10">
+                <input type="text" id="amount" name="amount" required>
+            </div>
+            <button class="btn btn-default mr-auto"><strong>Convert</strong></button>
+        </div>
+    </div>
+</form>
+<div class="container">
+    {% if input_vals != 'blank' and invalid_input == 'blank' and not invalid_amount %}
+    {{input_vals['amount']}} converted from {{input_vals['convert-from']}} to {{input_vals['convert-to']}} =
+    <strong>{{symbol}} {{conversion}}</strong>
+    {% endif %}
+</div>
+{% endblock %}
